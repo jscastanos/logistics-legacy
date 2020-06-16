@@ -11,7 +11,7 @@ namespace LMIS_Web.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("Get!");
+            return Ok("Get was called here!");
         }
     }
 }
