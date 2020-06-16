@@ -22,11 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Navigate to frontend
-      run: cd ClientApp
     - name: Install Dependencies
-      run: npm install
+      run: cd ClientApp && npm install
     - name: Build App
-      run: npm run build
+      run: cd ClientApp && npm run build
     - name: Test
-      run: npm run test
+      run: cd ClientApp && npm run test
