@@ -7,13 +7,11 @@ on:
   push:
     branches:
       - master
-      - setup-frontend-ci
     paths: 
       - "ClientApp/**"
   pull_request:
     branches:
       - master
-      - setup-frontend-ci
     paths: 
       - "ClientApp/**"
 

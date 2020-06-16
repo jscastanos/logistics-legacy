@@ -4,13 +4,11 @@ on:
   push:
     branches: 
       - master
-      - setup-backend-ci
     paths-ignore:
       - "ClientApp/**"
   pull_request:
     branches: 
       - master
-      - setup-backend-ci
     paths-ignore:
      - "ClientApp/**"
 
