@@ -13,7 +13,7 @@ export default class App extends Component {
     render() {
         return (
             <Layout>
-                <h1>Hi</h1>
+                <h1>Hello, World!</h1>
                 <Route exact path='/' component={Home} />
                 <Route path='/counter' component={Counter} />
                 <Route path='/fetch-data' component={FetchData} />
