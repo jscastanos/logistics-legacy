@@ -1,23 +1,39 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
+import Cookies from 'universal-cookie';
+import ClientLayout from './layout/client-layout';
 
-import './custom.css'
-
-export default class App extends Component {
-    static displayName = App.name;
-
-    render() {
-        return (
-            <Layout>
-                <h1>Hello World from ReactJS!</h1>
-                <Route exact path='/' component={Home} />
-                <Route path='/counter' component={Counter} />
-                <Route path='/fetch-data' component={FetchData} />
-            </Layout>
-        );
+class App extends Component{
+   constructor(props){
+    super(props);
+    this.state = {
+        ur: ""
     }
+   }
+
+   componentDidMount(){
+    // FOR DEMO PURPOSES
+    // use auth to get user details
+    // before creating a cookie
+    const cookies = new Cookies();
+    cookies.set('ur', '10001', { path: '/' });
+    this.setState({
+        ur: cookies.get('ur')
+    }) 
+   }
+   render(){
+       return(
+           <div>
+               { this.state.ur === '10001' ?  
+                <ClientLayout />
+               :
+                this.state.ur === '50001' ?
+                 <div>admin</div>   
+                :
+                 <div>visitor</div>
+               }
+           </div>
+       );
+   }
 }
+
+export default App;
