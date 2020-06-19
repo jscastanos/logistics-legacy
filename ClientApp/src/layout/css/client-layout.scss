@@ -1,24 +1,18 @@
 @import '../../assets/css/global.scss';
 
 .navbar {
-    background-color: $primary;
     margin-left: -15px;
     margin-right: -15px;
     padding-top: 0;
     padding-bottom: 0;
-    color: #fff;
-
-    .navbar-brand, .nav-item{
-        padding: 10px;
-    }
   
     .navbar-brand{
+        padding: 10px;
         margin-right: 40px;
     }
     
     .nav-link{
         .material-icons{
-            color: #fff;
             vertical-align: top;
         }
         span{
@@ -26,14 +20,10 @@
         }
     }
 
-    .nav-item:hover{
-        background-color: $primary-dark;
-
-        a{
-            color: $light;
-        }
+    .nav-item{
+        padding: 10px;
     }
-
+    
     .user{
         img{
             height: 35px;
@@ -46,3 +36,27 @@
     }
 }
 
+@mixin navbar-palette($background, $text-color, $icon-color, $hover-color){
+    background-color: $background;
+    .navbar-brand,
+    .navbar-text{    
+        color: $text-color;
+    }
+    
+    a, .material-icons,
+    .nav-link .material-icons{
+        color: $icon-color;
+    }
+
+    .nav-item:hover{
+        background-color: $hover-color;
+    }
+}
+
+.nb-primary{
+    @include navbar-palette($primary, $light, #fff, $primary-dark);
+}
+
+.nb-light{
+    @include navbar-palette(#fff, $font-dark, $font-dark-1, $light);
+}

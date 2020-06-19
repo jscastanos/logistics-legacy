@@ -1,9 +1,30 @@
+// variables
 $primary : #5D81EC;
 $primary-dark : #5576D8;
 
+$light : #FAFBFC;
+$light-1 : #F3F3FB;
 
-$light: #fff;
+$font-dark: #395881;
+$font-dark-1: #687F9F;
 
-a{
-    color: $light;
+
+// mixins
+@mixin border($property, $width,  $color, $style){
+    #{$property}: $width $color $style;
+}
+
+//fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+span, p,
+h1, h2, h3, h4, h5{
+    font-family: 'Roboto', sans-serif;
+}
+
+// global
+
+.heading{
+    text-transform: uppercase;
+    font-weight: bold;
 }
