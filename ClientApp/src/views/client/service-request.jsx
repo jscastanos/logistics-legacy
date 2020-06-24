@@ -91,7 +91,7 @@ class ServiceRequest extends Component{
                 </Col>
                 {/* right panel */}
                 <Col md="6">
-                    <Route path="/service-request/:id" component={ServiceRequestDetail}/>
+                    <Route path="/service-request/:id?" component={ServiceRequestDetail}/>
                 </Col>
             </Row>
         );

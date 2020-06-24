@@ -35,8 +35,11 @@ const ClientLayout = () => {
                     <Nav className="ml-auto" navbar>
                         <UncontrolledDropdown className="user" nav inNavbar>
                             <DropdownToggle nav caret>
-                                <img className="rounded-circle" alt="user" 
-                                    src="https://www.baytekent.com/wp-content/uploads/2016/12/facebook-default-no-profile-pic1.jpg" />
+                                <span className="user-default">
+                                    <MaterialIcon icon="perm_identity" />
+                                </span>
+                                {/* <img className="rounded-circle" alt="user" 
+                                    src={} /> */}
                                 <span>John Doe</span>
                             </DropdownToggle>
                             <DropdownMenu right>

@@ -1,0 +1,24 @@
+@import '../global.scss';
+
+$title-font: 1.375rem;
+
+.service-details{
+    height: 100%;
+
+    .default{
+        @extend .center-all;
+
+        div{
+            margin-top: calc($title-font + 11.25rem) / 2;
+            p{
+                font-size: $title-font;
+                color: $font-dark;
+            }
+
+            .material-icons{
+                color: $font-dark;
+                font-size: 11.25rem;
+            }   
+        }
+    }
+}
