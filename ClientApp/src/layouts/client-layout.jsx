@@ -1,0 +1,63 @@
+import React, { useState } from 'react'; 
+import { Container, Navbar, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownItem, DropdownMenu, NavbarToggler, Collapse } from "reactstrap";
+import MaterialIcon from 'material-icons-react';
+import { Route, Link } from 'react-router-dom';
+import ServiceRequest from '../views/client/service-request';
+
+import '../assets/css/layouts/client-layout.scss';
+
+const ClientLayout = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const toggle = () => setIsOpen(!isOpen);
+
+    return(
+        <Container fluid>
+            <Navbar expand="md" className="nb-primary">
+                <NavbarBrand tag={Link} to="/">Logo here</NavbarBrand>
+                <NavbarToggler onClick={toggle}>
+                    <MaterialIcon icon="menu" />
+                </NavbarToggler>
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav className="mr-auto" navbar>
+                        <NavItem>
+                            <NavLink tag={Link} to="/service-request">
+                                <MaterialIcon icon="dashboard" />
+                                    <span>Dashboard</span>
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink tag={Link} to="/">
+                                <MaterialIcon icon="add_shopping_cart" />
+                                <span>New Request</span>
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                    <Nav className="ml-auto" navbar>
+                        <UncontrolledDropdown className="user" nav inNavbar>
+                            <DropdownToggle nav caret>
+                                <img className="rounded-circle" alt="user" 
+                                    src="https://www.baytekent.com/wp-content/uploads/2016/12/facebook-default-no-profile-pic1.jpg" />
+                                <span>John Doe</span>
+                            </DropdownToggle>
+                            <DropdownMenu right>
+                                <DropdownItem>
+                                    option 1
+                                </DropdownItem>
+                                <DropdownItem>
+                                    option 2
+                                </DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem>
+                                    Log out
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+            <Route path="/service-request" component={ServiceRequest} />
+           </Container>
+    );
+}
+
+export default ClientLayout;
