@@ -61,7 +61,7 @@ class ServiceRequest extends Component{
     }
 
     render(){
-        const { serviceRequests, selectedItem } = this.state;
+        const { serviceRequests } = this.state;
         return(
             <Row>
                 {/* left panel */}
