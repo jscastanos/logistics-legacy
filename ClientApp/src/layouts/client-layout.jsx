@@ -3,12 +3,8 @@ import { Container, Navbar, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDrop
 import MaterialIcon from 'material-icons-react';
 import { Route, Link } from 'react-router-dom';
 import ServiceRequest from '../views/client/service-request';
-import ServiceRequestApproved from '../views/client/service-request-approved';
-import ServiceRequestCompleted from '../views/client/service-request-completed';
-import ServiceRequestDenied from '../views/client/service-request-denied';
-import ServiceRequestPending from '../views/client/service-request-pending';
 
-import './css/client-layout.scss';
+import '../assets/css/layouts/client-layout.scss';
 
 const ClientLayout = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -59,12 +55,8 @@ const ClientLayout = () => {
                     </Nav>
                 </Collapse>
             </Navbar>
-            <Route path="/service-request" exact component={ServiceRequest} />
-            <Route path="/service-request/approved" component={ServiceRequestApproved} />
-            <Route path="/service-request/completed" component={ServiceRequestCompleted} />
-            <Route path="/service-request/denied" component={ServiceRequestDenied} />
-            <Route path="/service-request/pending" component={ServiceRequestPending} />
-        </Container>
+            <Route path="/service-request" component={ServiceRequest} />
+           </Container>
     );
 }
 

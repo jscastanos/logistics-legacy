@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { Row, Col, Navbar, NavItem, Nav, NavLink, NavbarText } from 'reactstrap';
 import MaterialIcon from 'material-icons-react';
-import Moment from 'moment';
-
-import './css/service-request.scss';
+import ServiceRequestItem from '../../components/service-request-item';
+import '../../assets/css/views/client/service-request.scss';
+import ServiceRequestDetail from '../../components/service-request-detail';
+import { Route } from 'react-router-dom';
 
 class ServiceRequest extends Component{
     constructor(props){
         super(props);
         this.state = {
-            data : ""
+            serviceRequests : ""
         }
     }
     
     // DUMMY DATA
     componentDidMount(){
-        const serviceRequestData = [
+        const serviceRequests = [
             {
                 "ServiceReqId": 1,
                 "Origin": "Matina, Davao City",
@@ -51,14 +52,16 @@ class ServiceRequest extends Component{
         ];
 
         this.setState({
-            data: serviceRequestData
+            serviceRequests
         })
     }
 
     filterData(){
         console.log("filter something here")
     }
+
     render(){
+        const { serviceRequests, selectedItem } = this.state;
         return(
             <Row>
                 {/* left panel */}
@@ -78,42 +81,17 @@ class ServiceRequest extends Component{
                             </Navbar>
                         </Col>
                         <Col md="12" className="service-list br-2">
-                                { this.state.data.length > 0 ? 
-                                    this.state.data.map( d =>
-                                    <div key={d.ServiceReqId} className={
-                                        "service-item " +
-                                        (
-                                            d.ServiceReqStatus === 4 ? "denied" :
-                                            d.ServiceReqStatus === 3 ? "completed" :
-                                            d.ServiceReqStatus === 2 ? "approved" : ""
-                                        )
-                                    }>
-                                        <Row>
-                                            <Col>
-                                                <p>
-                                                    { Moment(d.StartDate).format('D MMM') } - { Moment(d.EndDate).format('D MMM YYYY')}
-                                                </p>
-                                           </Col>
-                                            <Col className="d-sm-block d-none">
-                                                <p>
-                                                    {d.Origin} - {d.Destination}
-                                                </p>
-                                            </Col>
-                                            <Col md="1" xs="2">
-                                                <MaterialIcon icon="keyboard_arrow_right" />
-                                            </Col>
-                                        </Row>
-                                    </div>
-                                )
-                                :
-                                <span>No data found!</span>
+                                {   serviceRequests.length > 0 ? 
+                                    serviceRequests.map(item => <ServiceRequestItem key={item.ServiceReqId} 
+                                                                                    serviceRequest={item}/> )
+                                    : <span>No data found!</span>
                                 }
                         </Col>
                     </Row>
                 </Col>
-
                 {/* right panel */}
                 <Col md="6">
+                    <Route path="/service-request/:id" component={ServiceRequestDetail}/>
                 </Col>
             </Row>
         );

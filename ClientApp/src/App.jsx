@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
-import ClientLayout from './layout/client-layout';
+import ClientLayout from './layouts/client-layout';
 
 class App extends Component{
    constructor(props){

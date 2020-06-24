@@ -1,26 +1,4 @@
-@import '../../../assets/css/global.scss';
-
-.bt-2{
-    @include border(border-top, 2px, $light-1, solid);
-}
-
-.br-2{
-    @include border(border-right, 2px, $light-1, solid);
-}
-
-.bb-2{
-    @include border(border-bottom, 2px, $light-1, solid);
-}
-
-.bl-2{
-    @include border(border-left, 2px, $light-1, solid);
-}
-
-.service-list{
-    background-color: $light;
-    min-height: 100vh;
-    padding: 12px 15px;
-}
+@import '../global.scss';
 
 .service-item{
     height: 75px;
@@ -31,6 +9,10 @@
     margin-bottom: 10px;
     padding: 0 12px;
     position: relative;
+
+    a{
+        text-decoration: none;
+    }
 
     &::before{
         content: "";
@@ -81,4 +63,10 @@
     &.completed::before{
         background-color: #28a745;
     }
+
+    &:hover, &.active{
+        background-color: $light-1;
+    }
+
+    
 }
