@@ -1,37 +1,50 @@
 @import '../global.scss';
 
 .navbar {
-    margin-left: -15px;
-    margin-right: -15px;
+    margin-left: -0.9375rem;
+    margin-right: -0.9375rem;
     padding-top: 0;
     padding-bottom: 0;
   
     .navbar-brand{
-        padding: 10px;
-        margin-right: 40px;
+        padding: 0.625rem;
+        margin-right: 2.5rem;
     }
     
     .nav-link{
-        .material-icons{
-            vertical-align: top;
-        }
         span{
-            margin-left: 8px;
+            margin-left: 0.5rem;
         }
     }
 
     .nav-item{
-        padding: 10px;
+        padding: 0.625rem;
     }
     
     .user{
+        .dropdown-toggle.nav-link{
+            margin-left: -0.625rem;
+        }
+        .user-default{
+            height: 2.1875rem;
+
+            svg{
+                border-radius: 50%;
+                padding: 0.3125rem;
+                font-size: 1.75rem;
+                color: $primary;
+                background-color: $light;
+                vertical-align: middle;
+            }
+        }
+
         img{
-            height: 35px;
+            height: 2.1875rem;
             width: auto;
         }
 
         span{
-            margin-left: 15px;
+            padding-right: 0.625rem;
         }
     }
 }
@@ -43,8 +56,7 @@
         color: $text-color;
     }
     
-    a, .material-icons,
-    .nav-link .material-icons{
+    a, .nav-link{
         color: $icon-color;
     }
 

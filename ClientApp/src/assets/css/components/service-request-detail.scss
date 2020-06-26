@@ -1,0 +1,154 @@
+@import '../global.scss';
+
+$title-font: 1.375rem;
+
+.service-details{
+    height: 100%;
+
+    .default{
+        @extend .center-all;
+
+        div{
+            margin-top: calc(1.375rem + 11.25rem) / 2;
+            p{
+                @include font($title-font, $font-dark);
+            }
+
+            svg{
+                @include font(11.25rem, $font-dark);
+            }   
+        }
+    }
+
+    .withStatus{
+        .nav-link{
+            &.active{
+                border: 0;
+                border-bottom: 0.125rem $font-dark solid;
+                text-transform: uppercase;
+                color: $font-dark;
+                font-weight: 600;
+            }
+        }
+
+        .tab-content{
+            p, span, strong, h1{
+                color: $font-dark;
+            }
+
+            .header, .details{
+                padding: 0.9375rem 1.9375rem;
+            }
+
+            .header{
+                .status{
+                    position: relative;
+                    margin-left: 1.5625rem;
+                    text-transform: capitalize;
+
+                    &::before{
+                        position: absolute;
+                        content: '';
+                        height: 0.5rem;
+                        width: 0.5rem;
+                        top: 0.3125rem;
+                        left: -0.9375rem;
+                        border-radius: 50%;
+                    }
+
+                    &.denied::before{
+                        @extend .danger;
+                    }
+                    
+                    &.approved::before{
+                        @extend .info;
+                    }
+                    
+                    &.completed::before{
+                        @extend .success;
+                    }
+
+                    &.pending::before{
+                        @extend .warning;
+                    }
+                }
+
+                @media (max-width: 29.25rem){
+                    div[class^='col']{
+                        padding-top: 0.625rem;
+                        padding-bottom: 0.625rem;
+                    }
+                }
+            }
+
+            .details{
+                .details-card{
+                    padding-top: 1.25rem;
+                    padding-bottom: 1.25rem;
+
+                    svg{
+                        margin-right: 0.5rem;
+                    }
+                    div{
+                        margin-left: 1.625rem;
+                    }
+                }
+
+                .vertical-timeline{
+                    padding: 0;
+                    margin-top: 2.1875rem;
+
+                    &::before{
+                        background-color: $font-dark;
+                        left: 0.5rem;
+                        width: 0.1875rem;
+                    }
+
+                    .vertical-timeline-element{                    
+                        margin: 0.3125rem 0;
+                        
+                        .vertical-timeline-element-icon{
+                            height: 1.25rem;
+                            width: 1.25rem;
+                            background-color: white;
+                            border: 0.125rem $font-dark solid;
+                            box-shadow: none;
+                        }
+
+                        .active{
+                            background-color: $font-dark;
+                        }
+                    }
+
+                    .vertical-timeline-element-content{
+                        box-shadow: none;
+                        margin-left: 1.875rem;
+                        padding: 0 0.9375rem 0.625rem 0.9375rem;
+                    }
+                }
+
+
+                &.denied{
+                    padding-top: 6.25rem;
+
+                    @media (max-width: 29.25rem){                    
+                        padding-top: 1.25rem;
+                    }
+
+                    .title{
+                        @extend .center-all;
+                        margin-bottom: 1.5625rem;
+
+                        h1{
+                            font-size: $title-font;
+                        }
+
+                        svg{
+                            @include font(11.25rem, $font-dark);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,23 +1,33 @@
 @import '../../global.scss';
 
 .bt-2{
-    @include border(border-top, 2px, $light-1, solid);
+    @include border(border-top, 0.125rem, $light-1, solid);
 }
 
 .br-2{
-    @include border(border-right, 2px, $light-1, solid);
+    @include border(border-right, 0.125rem, $light-1, solid);
 }
 
 .bb-2{
-    @include border(border-bottom, 2px, $light-1, solid);
+    @include border(border-bottom, 0.125rem, $light-1, solid);
 }
 
 .bl-2{
-    @include border(border-left, 2px, $light-1, solid);
+    @include border(border-left, 0.125rem, $light-1, solid);
 }
 
 .service-list{
     background-color: $light;
-    min-height: 100vh;
-    padding: 12px 15px;
+    padding: 0.75rem 0.9375rem;
+}
+
+@media (min-width: 48.0625rem){
+    .service-list{
+        min-height: calc(100vh - (4.375rem + 3.9375rem));
+    }
+}
+@media (max-width: 48rem){
+    .service-list{
+        min-height: calc(100vh - (3.75rem + 3.75rem));
+    }
 }

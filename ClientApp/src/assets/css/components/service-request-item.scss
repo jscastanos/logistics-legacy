@@ -1,33 +1,30 @@
 @import '../global.scss';
 
 .service-item{
-    height: 75px;
-    border-radius: 10px;
+    display: block;
+    height: 4.6875rem;
+    border-radius: 0.625rem;
     background-color: white;
-    border: 2px $light-1 solid;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 0 12px;
+    border: 0.125rem $light-1 solid;
+    margin-top: 0.625rem;
+    margin-bottom: 0.625rem;
+    padding: 0 0.75rem;
     position: relative;
-
-    a{
-        text-decoration: none;
-    }
 
     &::before{
         content: "";
-        width: 7px;
-        height: 40px;
-        background-color: #ffc107;
+        width: 0.4375rem;
+        height: 2.5rem;
         position: absolute;
-        top: calc( (75px - 40px) / 2);
-        left: -4px;
+        @extend .warning;
+        top: calc( (4.6875rem - 2.5rem) / 2);
+        left: -0.25rem;
     }
 
     .row,
     .col{
         height: inherit;
-        line-height: 75px;
+        line-height: 4.6875rem;
         min-width: 0;
         p{
             overflow: hidden;
@@ -42,31 +39,24 @@
     }
 
     .col:nth-child(2){
-        font-size: 14px;
+        font-size: 0.875rem;
         color: $font-dark-1;
     }
 
-    .col:last-child{
-        .material-icons{
-            vertical-align: middle;
-        }
-    }
-
     &.denied::before{
-        background-color: #dc3545;
+        @extend .danger;
     }
 
     &.approved::before{
-        background-color: #007bff;
+        @extend .info;
     }
 
     &.completed::before{
-        background-color: #28a745;
+        @extend .success;
     }
 
     &:hover, &.active{
-        background-color: $light-1;
-    }
-
-    
+        background-color: $light-1;    
+        text-decoration: none;
+    }    
 }

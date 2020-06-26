@@ -14,6 +14,11 @@ $font-dark-1: #687F9F;
     #{$property}: $width $color $style;
 }
 
+@mixin font($size, $color){
+    color: $color;
+    font-size: $size;
+}
+
 //fonts
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
@@ -27,4 +32,31 @@ h1, h2, h3, h4, h5{
 .heading{
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.center-all{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+}
+
+.danger {
+    background-color: #dc3545;
+}
+
+.success {
+    background-color: #28a745;
+}
+
+.warning {
+    background-color: #ffc107;
+}
+
+.info{
+    background-color: #007bff;
+}
+
+.primary-font{
+    color: $font-dark;
 }
