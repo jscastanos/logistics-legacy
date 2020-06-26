@@ -8,6 +8,8 @@ import axios from 'axios';
 import { daysDiff, formatDate } from '../helpers/date-formatter';
 import '../assets/css/components/service-request-detail.scss';
 import { getServiceStatus } from '../helpers/service-status';
+import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
 
 const init = {
     selectedItem : {
@@ -84,7 +86,7 @@ class ServiceRequestDetail extends Component{
                     <Col className="withStatus">
                         <Nav tabs>
                             <NavItem>
-                                <NavLink className={(activeTab === "1" ? "active" : "")}
+                                <NavLink className={(activeTab === "1" && "active")}
                                          onClick={() => this.onToggleTab("1")}>Service Details</NavLink>
                             </NavItem>
                         </Nav>
@@ -141,9 +143,32 @@ class ServiceRequestDetail extends Component{
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col xs="12" className="details-card">
-
-                                            </Col>
+                                            { selectedItem.ServiceReqStatus !== 1 &&
+                                                <Col className="details-card">
+                                                    <p>
+                                                        <LocalShippingIcon />
+                                                        <strong>Timeline</strong>
+                                                    </p>
+                                                    <VerticalTimeline 
+                                                        layout={'1-column'}
+                                                        animate={false}>
+                                                        <VerticalTimelineElement iconClassName={"active"}> 
+                                                            <p className="vertical-timeline-element-title">Service Request Accepted</p>
+                                                            <p>(date here)</p>
+                                                        </VerticalTimelineElement>
+                                                        
+                                                        <VerticalTimelineElement>
+                                                            <p className="vertical-timeline-element-title">On Delivery</p>
+                                                            <p>(date here)</p>
+                                                        </VerticalTimelineElement>
+                                                        
+                                                        <VerticalTimelineElement>
+                                                            <p className="vertical-timeline-element-title">Delivered</p>
+                                                            <p>(date here)</p>
+                                                        </VerticalTimelineElement>
+                                                    </VerticalTimeline>
+                                                </Col>
+                                            }
                                         </Row>
                                     </Col>
                                     :

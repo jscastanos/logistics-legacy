@@ -94,6 +94,40 @@ $title-font: 1.375rem;
                     }
                 }
 
+                .vertical-timeline{
+                    padding: 0;
+                    margin-top: 2.1875rem;
+
+                    &::before{
+                        background-color: $font-dark;
+                        left: 0.5rem;
+                        width: 0.1875rem;
+                    }
+
+                    .vertical-timeline-element{                    
+                        margin: 0.3125rem 0;
+                        
+                        .vertical-timeline-element-icon{
+                            height: 1.25rem;
+                            width: 1.25rem;
+                            background-color: white;
+                            border: 0.125rem $font-dark solid;
+                            box-shadow: none;
+                        }
+
+                        .active{
+                            background-color: $font-dark;
+                        }
+                    }
+
+                    .vertical-timeline-element-content{
+                        box-shadow: none;
+                        margin-left: 1.875rem;
+                        padding: 0 0.9375rem 0.625rem 0.9375rem;
+                    }
+                }
+
+
                 &.denied{
                     padding-top: 6.25rem;
 
