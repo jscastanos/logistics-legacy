@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Navbar, NavItem, Nav, NavLink, NavbarText } from 'reactstrap';
-import MaterialIcon from 'material-icons-react';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import ServiceRequestItem from '../../components/service-request-item';
 import '../../assets/css/views/client/service-request.scss';
 import ServiceRequestDetail from '../../components/service-request-detail';
@@ -51,7 +51,7 @@ class ServiceRequest extends Component{
                                 <Nav className="ml-auto">
                                     <NavItem>
                                         <NavLink href="#" onClick={() => this.filterData()}>
-                                            <MaterialIcon icon="filter_list" />
+                                            <FilterListIcon />
                                             <span>Filter</span>
                                         </NavLink>
                                     </NavItem>
