@@ -1,6 +1,9 @@
 import React, { useState } from 'react'; 
 import { Container, Navbar, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownItem, DropdownMenu, NavbarToggler, Collapse } from "reactstrap";
-import MaterialIcon from 'material-icons-react';
+import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import { Route, Link } from 'react-router-dom';
 import ServiceRequest from '../views/client/service-request';
 
@@ -15,19 +18,19 @@ const ClientLayout = () => {
             <Navbar expand="md" className="nb-primary">
                 <NavbarBrand tag={Link} to="/">Logo here</NavbarBrand>
                 <NavbarToggler onClick={toggle}>
-                    <MaterialIcon icon="menu" />
+                    <MenuRoundedIcon style={{color: "white"}} />
                 </NavbarToggler>
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="mr-auto" navbar>
                         <NavItem>
                             <NavLink tag={Link} to="/service-request">
-                                <MaterialIcon icon="dashboard" />
-                                    <span>Dashboard</span>
+                                <DashboardIcon />
+                                <span>Dashboard</span>
                             </NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink tag={Link} to="/">
-                                <MaterialIcon icon="add_shopping_cart" />
+                                <AddShoppingCartIcon />
                                 <span>New Request</span>
                             </NavLink>
                         </NavItem>
@@ -36,7 +39,7 @@ const ClientLayout = () => {
                         <UncontrolledDropdown className="user" nav inNavbar>
                             <DropdownToggle nav caret>
                                 <span className="user-default">
-                                    <MaterialIcon icon="perm_identity" />
+                                    <PermIdentityIcon />
                                 </span>
                                 {/* <img className="rounded-circle" alt="user" 
                                     src={} /> */}

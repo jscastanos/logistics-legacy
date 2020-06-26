@@ -12,9 +12,6 @@
     }
     
     .nav-link{
-        .material-icons{
-            vertical-align: top;
-        }
         span{
             margin-left: 0.5rem;
         }
@@ -31,9 +28,10 @@
         .user-default{
             height: 2.1875rem;
 
-            .material-icons{
+            svg{
                 border-radius: 50%;
                 padding: 0.3125rem;
+                font-size: 1.75rem;
                 color: $primary;
                 background-color: $light;
                 vertical-align: middle;
@@ -58,8 +56,7 @@
         color: $text-color;
     }
     
-    a, .material-icons,
-    .nav-link .material-icons{
+    a, .nav-link{
         color: $icon-color;
     }
 

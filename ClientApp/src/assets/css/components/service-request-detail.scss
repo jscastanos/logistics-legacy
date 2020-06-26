@@ -14,7 +14,7 @@ $title-font: 1.375rem;
                 @include font($title-font, $font-dark);
             }
 
-            .material-icons{
+            svg{
                 @include font(11.25rem, $font-dark);
             }   
         }
@@ -43,7 +43,7 @@ $title-font: 1.375rem;
             .header{
                 .status{
                     position: relative;
-                    margin-left: 0.9375rem;
+                    margin-left: 1.5625rem;
                     text-transform: capitalize;
 
                     &::before{
@@ -52,7 +52,7 @@ $title-font: 1.375rem;
                         height: 0.5rem;
                         width: 0.5rem;
                         top: 0.3125rem;
-                        left: -0.75rem;
+                        left: -0.9375rem;
                         border-radius: 50%;
                     }
 
@@ -86,8 +86,7 @@ $title-font: 1.375rem;
                     padding-top: 1.25rem;
                     padding-bottom: 1.25rem;
 
-                    .material-icons{
-                        vertical-align: middle;
+                    svg{
                         margin-right: 0.5rem;
                     }
                     div{
@@ -110,7 +109,7 @@ $title-font: 1.375rem;
                             font-size: $title-font;
                         }
 
-                        .material-icons{
+                        svg{
                             @include font(11.25rem, $font-dark);
                         }
                     }

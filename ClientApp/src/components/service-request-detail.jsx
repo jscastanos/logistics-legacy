@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Button } from 'reactstrap';
-import MaterialIcon from 'material-icons-react';
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import ClearIcon from '@material-ui/icons/Clear';
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import axios from 'axios';
 import { daysDiff, formatDate } from '../helpers/date-formatter';
 import '../assets/css/components/service-request-detail.scss';
@@ -72,7 +75,7 @@ class ServiceRequestDetail extends Component{
                     // Default
                     <Col className="default">
                         <div>
-                            <MaterialIcon icon="local_shipping" />
+                            <LocalShippingIcon />
                             <p>Select a service request to view details</p>
                         </div>
                     </Col>
@@ -109,7 +112,7 @@ class ServiceRequestDetail extends Component{
                                         <Row>
                                             <Col xs="12" md="6" className="details-card">
                                                 <p>
-                                                    <MaterialIcon icon="multiple_stop"></MaterialIcon>
+                                                    <EmojiTransportationIcon />
                                                     <strong>Origin</strong>
                                                 </p>
                                                 <div>
@@ -119,7 +122,7 @@ class ServiceRequestDetail extends Component{
                                             </Col>
                                             <Col xs="12" md="6" className="details-card">
                                                 <p>
-                                                    <MaterialIcon icon="multiple_stop"></MaterialIcon>
+                                                    <EmojiTransportationIcon />
                                                     <strong>Destination</strong>
                                                 </p>
                                                 <div>
@@ -128,7 +131,7 @@ class ServiceRequestDetail extends Component{
                                             </Col>
                                             <Col xs="12" md="6" className="details-card">
                                                 <p>
-                                                    <MaterialIcon icon="query_builder"></MaterialIcon>
+                                                    <QueryBuilderIcon />
                                                     <strong>Duration</strong>
                                                 </p>
                                                 <div>
@@ -149,7 +152,7 @@ class ServiceRequestDetail extends Component{
                                             <Col xs="12">
                                                 <div className="title">
                                                     <div>
-                                                        <MaterialIcon icon="no_transfer" />
+                                                        <ClearIcon />
                                                         <h1>The service order was denied.</h1>
                                                     </div>
                                                 </div>
