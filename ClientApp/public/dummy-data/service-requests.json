@@ -1,0 +1,34 @@
+[
+    {
+        "ServiceReqId": 1,
+        "Origin": "Matina, Davao City",
+        "Destination": "Magugpo East, Tagum City",
+        "StartDate": "6/10/2020",
+        "EndDate": "6/19/2020",
+        "ServiceReqStatus": 1
+    },
+    {
+        "ServiceReqId": 2,
+        "Origin": "Matina, Davao City",
+        "Destination": "Cebu City",
+        "StartDate": "6/10/2020",
+        "EndDate": "6/19/2020",
+        "ServiceReqStatus": 2
+    },
+    {
+        "ServiceReqId": 3,
+        "Origin": "General Santos City",
+        "Destination": "Mankilam, Tagum City",
+        "StartDate": "6/10/2020",
+        "EndDate": "6/19/2020",
+        "ServiceReqStatus": 3
+    },
+    {
+        "ServiceReqId": 4,
+        "Origin": "Pantukan, Davao de Oro",
+        "Destination": "Magugpo North, Tagum City",
+        "StartDate": "6/10/2020",
+        "EndDate": "6/19/2020",
+        "ServiceReqStatus": 4
+    }
+]

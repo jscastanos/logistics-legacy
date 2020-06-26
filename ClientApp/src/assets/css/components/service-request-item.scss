@@ -18,8 +18,8 @@
         content: "";
         width: 0.4375rem;
         height: 2.5rem;
-        background-color: #ffc107;
         position: absolute;
+        @extend .warning;
         top: calc( (4.6875rem - 2.5rem) / 2);
         left: -0.25rem;
     }
@@ -53,15 +53,15 @@
     }
 
     &.denied::before{
-        background-color: #dc3545;
+        @extend .danger;
     }
 
     &.approved::before{
-        background-color: #007bff;
+        @extend .info;
     }
 
     &.completed::before{
-        background-color: #28a745;
+        @extend .success;
     }
 
     &:hover, &.active{

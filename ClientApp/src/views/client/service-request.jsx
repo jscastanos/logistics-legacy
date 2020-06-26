@@ -5,62 +5,40 @@ import ServiceRequestItem from '../../components/service-request-item';
 import '../../assets/css/views/client/service-request.scss';
 import ServiceRequestDetail from '../../components/service-request-detail';
 import { Route } from 'react-router-dom';
+import axios from 'axios';
 
 class ServiceRequest extends Component{
+    _isMounted = false;
     constructor(props){
         super(props);
         this.state = {
-            serviceRequests : ""
+            serviceRequests : []
         }
     }
     
     // DUMMY DATA
-    componentDidMount(){
-        const serviceRequests = [
-            {
-                "ServiceReqId": 1,
-                "Origin": "Matina, Davao City",
-                "Destination": "Magugpo East, Tagum City",
-                "StartDate": "6/10/2020",
-                "EndDate": "6/19/2020",
-                "ServiceReqStatus": 1,
-            },
-            {
-                "ServiceReqId": 2,
-                "Origin": "Matina, Davao City",
-                "Destination": "Cebu City",
-                "StartDate": "6/10/2020",
-                "EndDate": "6/19/2020",
-                "ServiceReqStatus": 2,
-            },
-            {
-                "ServiceReqId": 3,
-                "Origin": "General Santos City",
-                "Destination": "Mankilam, Tagum City",
-                "StartDate": "6/10/2020",
-                "EndDate": "6/19/2020",
-                "ServiceReqStatus": 3,
-            },
-            {
-                "ServiceReqId": 4,
-                "Origin": "Pantukan, Davao de Oro",
-                "Destination": "Magugpo North, Tagum City",
-                "StartDate": "6/10/2020",
-                "EndDate": "6/19/2020",
-                "ServiceReqStatus": 4,
-            }
-        ];
-
-        this.setState({
-            serviceRequests
-        })
+    componentDidMount = async () =>{
+        this._isMounted = true;
+        
+        await axios.get('../dummy-data/service-requests.json')
+                    .then(response => {
+                        if(this._isMounted){
+                            this.setState({
+                                serviceRequests : response.data
+                            })
+                        }
+                    });
     }
 
-    filterData(){
+    filterData = () => {
         console.log("filter something here")
     }
 
-    render(){
+    componentWillUnmount = () => {
+        this._isMounted = false;
+    }
+
+    render = () => {
         const { serviceRequests } = this.state;
         return(
             <Row>
