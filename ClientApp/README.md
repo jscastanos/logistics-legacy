@@ -2,7 +2,7 @@
 
 ## Folder Structure
 
-- **assets** - for static files (css, images)
+- **assets** - for static files (css, images) *Will be removed to prioritize JSS*
 
 - **helpers** - for global functions
 

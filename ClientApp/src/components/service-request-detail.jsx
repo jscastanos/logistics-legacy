@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { Row, Col, Nav, NavItem, NavLink, TabContent, TabPane, Button } from 'reactstrap';
-import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-import ClearIcon from '@material-ui/icons/Clear';
-import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
+import { EmojiTransportation, LocalShipping, Clear, QueryBuilder} from '@material-ui/icons';
+import { Grid, Button, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { daysDiff, formatDate } from '../helpers/date-formatter';
-import '../assets/css/components/service-request-detail.scss';
 import { getServiceStatus } from '../helpers/service-status';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
@@ -20,7 +16,6 @@ const init = {
         EndDate: null,
         ServiceReqStatus: null,
     },
-    activeTab : "1"
 }
 
 class ServiceRequestDetail extends Component{
@@ -58,148 +53,139 @@ class ServiceRequestDetail extends Component{
                     });
     }
 
-    onToggleTab = (tabId) => {
-        if(this._isMounted){
-            this.setState({activeTab : tabId});
-        }
-    }
-
     componentWillUnmount = () =>{
         this._isMounted = false;
     }
 
     render = () =>{   
-        const { selectedItem, activeTab } = this.state;
+        const { selectedItem } = this.state;
 
         return(
-            <Row className="service-details">
+            <Grid container>
                 { (selectedItem.ServiceReqId === null || selectedItem.ServiceReqId === undefined) ? 
                     // Default
-                    <Col className="default">
+                    <Grid item>
                         <div>
-                            <LocalShippingIcon />
+                            <LocalShipping />
                             <p>Select a service request to view details</p>
                         </div>
-                    </Col>
+                    </Grid>
 
                 : 
-                    <Col className="withStatus">
-                        <Nav tabs>
-                            <NavItem>
-                                <NavLink className={(activeTab === "1" && "active")}
-                                         onClick={() => this.onToggleTab("1")}>Service Details</NavLink>
-                            </NavItem>
-                        </Nav>
-
-                        <TabContent activeTab={activeTab}>
-                            <TabPane tabId="1">
-                                <Row>
-                                    <Col xs="12" className="header">
-                                        <Row>
-                                            <Col xs="12"  md="6">
-                                                <strong>Status</strong> : 
-                                                <span className={"status " + getServiceStatus(selectedItem.ServiceReqStatus)}>
-                                                    {getServiceStatus(selectedItem.ServiceReqStatus)}
-                                                </span>
-                                            </Col>
-                                            <Col xs="12"  md="6">
-                                                <strong>Reference No</strong> : <span>12312 ("hardcoded data")</span>
-                                            </Col>
-                                        </Row>                               
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    { selectedItem.ServiceReqStatus !== 4 ? 
-                                    <Col xs="12" className="details">
-                                        <Row>
-                                            <Col xs="12" md="6" className="details-card">
+                    <React.Fragment>
+                        <Grid item xs={12}>
+                            <Typography variant="subtitle1" color="initial">
+                                Service Details
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container>
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item xs={12} md={6}>
+                                            <strong>Status</strong> : 
+                                            <span className={"status " + getServiceStatus(selectedItem.ServiceReqStatus)}>
+                                                {getServiceStatus(selectedItem.ServiceReqStatus)}
+                                            </span>
+                                        </Grid>
+                                        <Grid item xs={12}  md={6}>
+                                            <strong>Reference No</strong> : <span>12312 ("hardcoded data")</span>
+                                        </Grid>
+                                    </Grid>                               
+                                </Grid>
+                            </Grid>
+                            <Grid container>
+                                { selectedItem.ServiceReqStatus !== 4 ? 
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item xs={12} md={6}>
+                                            <p>
+                                                <EmojiTransportation />
+                                                <strong>Origin</strong>
+                                            </p>
+                                            <div>
+                                                <p>{ selectedItem.Origin }</p>
+                                            </div>
+                                        
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <p>
+                                                <EmojiTransportation />
+                                                <strong>Destination</strong>
+                                            </p>
+                                            <div>
+                                                <p>{ selectedItem.Destination }</p>
+                                            </div>                                                
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <p>
+                                                <QueryBuilder />
+                                                <strong>Duration</strong>
+                                            </p>
+                                            <div>
+                                                <p>{ daysDiff(selectedItem.StartDate, selectedItem.EndDate) } Days</p>
+                                                <p>{ formatDate(selectedItem.StartDate, "DD MMM YYYY") } - { formatDate(selectedItem.EndDate, "DD MMM YYYY")}</p>
+                                            </div>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container>
+                                        { selectedItem.ServiceReqStatus !== 1 &&
+                                            <Grid item>
                                                 <p>
-                                                    <EmojiTransportationIcon />
-                                                    <strong>Origin</strong>
+                                                    <LocalShipping />
+                                                    <strong>Timeline</strong>
                                                 </p>
+                                                <VerticalTimeline 
+                                                    layout={'1-column'}
+                                                    animate={false}>
+                                                    <VerticalTimelineElement iconClassName={"active"}> 
+                                                        <p className="vertical-timeline-element-title">Service Request Accepted</p>
+                                                        <p>(date here)</p>
+                                                    </VerticalTimelineElement>
+                                                    
+                                                    <VerticalTimelineElement>
+                                                        <p className="vertical-timeline-element-title">On Delivery</p>
+                                                        <p>(date here)</p>
+                                                    </VerticalTimelineElement>
+                                                    
+                                                    <VerticalTimelineElement>
+                                                        <p className="vertical-timeline-element-title">Delivered</p>
+                                                        <p>(date here)</p>
+                                                    </VerticalTimelineElement>
+                                                </VerticalTimeline>
+                                            </Grid>
+                                        }
+                                    </Grid>
+                                </Grid>
+                                :
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item>
+                                            <div className="title">
                                                 <div>
-                                                    <p>{ selectedItem.Origin }</p>
+                                                    <Clear/>
+                                                    <h1>The service order was denied.</h1>
                                                 </div>
-                                            
-                                            </Col>
-                                            <Col xs="12" md="6" className="details-card">
+                                            </div>
+                                            <div className="remarks">
+                                                <p><strong>Remarks</strong></p>
                                                 <p>
-                                                    <EmojiTransportationIcon />
-                                                    <strong>Destination</strong>
+                                                    Bacon ipsum dolor amet doner hamburger shankle, burgdoggen boudin pig tri-tip sausage. Venison pork chop turducken rump tongue bresaola. Short loin tongue capicola pastrami swine pork loin bresaola. Corned beef chuck tenderloin bresaola. Pig alcatra cupim pancetta jowl ribeye, burgdoggen ham hock corned beef porchetta cow turducken boudin tongue frankfurter. Doner short ribs jowl porchetta shoulder turkey leberkas. Kielbasa fatback flank jerky salami pastrami hamburger tail.
                                                 </p>
-                                                <div>
-                                                    <p>{ selectedItem.Destination }</p>
-                                                </div>                                                
-                                            </Col>
-                                            <Col xs="12" md="6" className="details-card">
-                                                <p>
-                                                    <QueryBuilderIcon />
-                                                    <strong>Duration</strong>
-                                                </p>
-                                                <div>
-                                                    <p>{ daysDiff(selectedItem.StartDate, selectedItem.EndDate) } Days</p>
-                                                    <p>{ formatDate(selectedItem.StartDate, "DD MMM YYYY") } - { formatDate(selectedItem.EndDate, "DD MMM YYYY")}</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            { selectedItem.ServiceReqStatus !== 1 &&
-                                                <Col className="details-card">
-                                                    <p>
-                                                        <LocalShippingIcon />
-                                                        <strong>Timeline</strong>
-                                                    </p>
-                                                    <VerticalTimeline 
-                                                        layout={'1-column'}
-                                                        animate={false}>
-                                                        <VerticalTimelineElement iconClassName={"active"}> 
-                                                            <p className="vertical-timeline-element-title">Service Request Accepted</p>
-                                                            <p>(date here)</p>
-                                                        </VerticalTimelineElement>
-                                                        
-                                                        <VerticalTimelineElement>
-                                                            <p className="vertical-timeline-element-title">On Delivery</p>
-                                                            <p>(date here)</p>
-                                                        </VerticalTimelineElement>
-                                                        
-                                                        <VerticalTimelineElement>
-                                                            <p className="vertical-timeline-element-title">Delivered</p>
-                                                            <p>(date here)</p>
-                                                        </VerticalTimelineElement>
-                                                    </VerticalTimeline>
-                                                </Col>
-                                            }
-                                        </Row>
-                                    </Col>
-                                    :
-                                    <Col xs="12" className="details denied">
-                                        <Row>
-                                            <Col xs="12">
-                                                <div className="title">
-                                                    <div>
-                                                        <ClearIcon />
-                                                        <h1>The service order was denied.</h1>
-                                                    </div>
-                                                </div>
-                                                <div className="remarks">
-                                                    <p><strong>Remarks</strong></p>
-                                                    <p>
-                                                        Bacon ipsum dolor amet doner hamburger shankle, burgdoggen boudin pig tri-tip sausage. Venison pork chop turducken rump tongue bresaola. Short loin tongue capicola pastrami swine pork loin bresaola. Corned beef chuck tenderloin bresaola. Pig alcatra cupim pancetta jowl ribeye, burgdoggen ham hock corned beef porchetta cow turducken boudin tongue frankfurter. Doner short ribs jowl porchetta shoulder turkey leberkas. Kielbasa fatback flank jerky salami pastrami hamburger tail.
-                                                    </p>
-                                                </div>
-                                            </Col>
-                                            <Col xs="12" className="text-center">
-                                                <Button color="primary">Update Service Details</Button>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                    }
-                                </Row>
-                            </TabPane>
-                        </TabContent>
-                    </Col>
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Button color="primary">Update Service Details</Button>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                }
+                            </Grid>
+                            
+                        </Grid>
+                    </React.Fragment>
                 }
-            </Row>
+            </Grid>
         )
     }
 }
