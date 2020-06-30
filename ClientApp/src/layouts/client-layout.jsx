@@ -49,7 +49,7 @@ export default function ClientLayout() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar elevation={0} className={classes.appBar} position={"static"}>
         <Toolbar>
           <Typography variant="h6" className={classes.brand}>
             Logo here

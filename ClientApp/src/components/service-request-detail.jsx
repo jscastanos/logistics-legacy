@@ -1,193 +1,329 @@
-import React, { Component } from 'react';
-import { EmojiTransportation, LocalShipping, Clear, QueryBuilder} from '@material-ui/icons';
-import { Grid, Button, Typography } from '@material-ui/core';
-import axios from 'axios';
-import { daysDiff, formatDate } from '../helpers/date-formatter';
-import { getServiceStatus } from '../helpers/service-status';
-import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
-import 'react-vertical-timeline-component/style.min.css';
+import React, { Component } from "react";
+import {
+  EmojiTransportation,
+  LocalShipping,
+  Clear,
+  QueryBuilder,
+  CheckCircle,
+} from "@material-ui/icons";
+import { Grid, Button, Typography, withStyles } from "@material-ui/core";
+import axios from "axios";
+import { daysDiff, formatDate } from "../helpers/date-formatter";
+import { getServiceStatus } from "../helpers/service-status";
+import {
+  VerticalTimeline,
+  VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
 
 const init = {
-    selectedItem : {
-        ServiceReqId: null,
-        Origin: null,
-        Destination: null,
-        StartDate: null,
-        EndDate: null,
-        ServiceReqStatus: null,
+  selectedItem: {
+    ServiceReqId: null,
+    Origin: null,
+    Destination: null,
+    StartDate: null,
+    EndDate: null,
+    ServiceReqStatus: null,
+  },
+};
+
+const styles = () => ({
+  paddingAll: {
+    padding: "1.5625rem",
+  },
+  iconAsLogo: {
+    fontSize: "12.5rem",
+  },
+  withMinHeight: {
+    minHeight: "calc(100vh - 4rem)",
+  },
+  status: {
+    position: "relative",
+    marginLeft: "1.5625rem",
+    textTransform: "capitalize",
+
+    "&::before": {
+      position: "absolute",
+      content: '""',
+      height: "0.5rem",
+      width: "0.5rem",
+      top: "0.3125rem",
+      left: "-0.9375rem",
+      borderRadius: "50%",
     },
-}
+  },
+  marginBottom: {
+    marginBottom: "0.625rem",
+  },
+  marginRight: {
+    marginRight: "0.625rem",
+  },
+  verticalTimeline: {
+    padding: 0,
+    marginTop: "2.1875rem",
+    "&::before": {
+      backgroundColor: "#395881",
+      left: "0.5rem",
+      width: "0.1875rem",
+    },
+  },
+  verticalTimelineElement: {
+    margin: "0.3125rem 0",
+  },
+  verticalTimelineIcon: {
+    height: "1.25rem",
+    width: "1.25rem",
+    backgroundColor: "white",
+    border: "0.125rem #395881 solid",
+    color: "#395881",
+    boxShadow: "none",
+  },
+});
 
-class ServiceRequestDetail extends Component{
-    _isMounted = false;
+class ServiceRequestDetail extends Component {
+  _isMounted = false;
 
-    constructor(props){
-        super(props);
-        this.state = init;
+  constructor(props) {
+    super(props);
+    this.state = init;
+  }
+
+  componentDidMount = () => {
+    this._isMounted = true;
+  };
+
+  componentDidUpdate = async () => {
+    const currentSelectedId = this.props.match.params.id;
+
+    if (this._isMounted) {
+      if (
+        currentSelectedId !== undefined &&
+        this.state.selectedItem.ServiceReqId !== parseInt(currentSelectedId)
+      ) {
+        await this.getServiceRequestDetails(currentSelectedId);
+      } else if (
+        currentSelectedId === undefined &&
+        this.state.selectedItem.ServiceReqId !== null
+      ) {
+        this.setState(init);
+      }
     }
+  };
 
-    componentDidMount = () => {
-        this._isMounted = true; 
-    }
+  getServiceRequestDetails = async (id) => {
+    await axios.get("../dummy-data/service-requests.json").then((response) => {
+      this.setState({
+        selectedItem: response.data[id - 1],
+      });
+    });
+  };
 
-    componentDidUpdate = async () => {
-        const currentSelectedId = this.props.match.params.id;
+  componentWillUnmount = () => {
+    this._isMounted = false;
+  };
 
-        if(this._isMounted){
-           if(currentSelectedId !== undefined && this.state.selectedItem.ServiceReqId !== parseInt(currentSelectedId)){
-               await this.getServiceRequestDetails(currentSelectedId)
+  render = () => {
+    const { selectedItem } = this.state;
+    const { classes } = this.props;
 
-           }else if(currentSelectedId === undefined && this.state.selectedItem.ServiceReqId !== null){
-               this.setState(init)
-           }
-        }
-        
-    }
-
-    getServiceRequestDetails = async (id) => {
-        await axios.get("../dummy-data/service-requests.json")
-                    .then(response => {
-                        this.setState({
-                            selectedItem : response.data[id - 1]
-                        })
-                    });
-    }
-
-    componentWillUnmount = () =>{
-        this._isMounted = false;
-    }
-
-    render = () =>{   
-        const { selectedItem } = this.state;
-
-        return(
-            <Grid container>
-                { (selectedItem.ServiceReqId === null || selectedItem.ServiceReqId === undefined) ? 
-                    // Default
-                    <Grid item>
-                        <div>
-                            <LocalShipping />
-                            <p>Select a service request to view details</p>
-                        </div>
-                    </Grid>
-
-                : 
-                    <React.Fragment>
-                        <Grid item xs={12}>
-                            <Typography variant="subtitle1" color="initial">
-                                Service Details
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <Grid container>
-                                        <Grid item xs={12} md={6}>
-                                            <strong>Status</strong> : 
-                                            <span className={"status " + getServiceStatus(selectedItem.ServiceReqStatus)}>
-                                                {getServiceStatus(selectedItem.ServiceReqStatus)}
-                                            </span>
-                                        </Grid>
-                                        <Grid item xs={12}  md={6}>
-                                            <strong>Reference No</strong> : <span>12312 ("hardcoded data")</span>
-                                        </Grid>
-                                    </Grid>                               
-                                </Grid>
-                            </Grid>
-                            <Grid container>
-                                { selectedItem.ServiceReqStatus !== 4 ? 
-                                <Grid item xs={12}>
-                                    <Grid container>
-                                        <Grid item xs={12} md={6}>
-                                            <p>
-                                                <EmojiTransportation />
-                                                <strong>Origin</strong>
-                                            </p>
-                                            <div>
-                                                <p>{ selectedItem.Origin }</p>
-                                            </div>
-                                        
-                                        </Grid>
-                                        <Grid item xs={12} md={6}>
-                                            <p>
-                                                <EmojiTransportation />
-                                                <strong>Destination</strong>
-                                            </p>
-                                            <div>
-                                                <p>{ selectedItem.Destination }</p>
-                                            </div>                                                
-                                        </Grid>
-                                        <Grid item xs={12} md={6}>
-                                            <p>
-                                                <QueryBuilder />
-                                                <strong>Duration</strong>
-                                            </p>
-                                            <div>
-                                                <p>{ daysDiff(selectedItem.StartDate, selectedItem.EndDate) } Days</p>
-                                                <p>{ formatDate(selectedItem.StartDate, "DD MMM YYYY") } - { formatDate(selectedItem.EndDate, "DD MMM YYYY")}</p>
-                                            </div>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid container>
-                                        { selectedItem.ServiceReqStatus !== 1 &&
-                                            <Grid item>
-                                                <p>
-                                                    <LocalShipping />
-                                                    <strong>Timeline</strong>
-                                                </p>
-                                                <VerticalTimeline 
-                                                    layout={'1-column'}
-                                                    animate={false}>
-                                                    <VerticalTimelineElement iconClassName={"active"}> 
-                                                        <p className="vertical-timeline-element-title">Service Request Accepted</p>
-                                                        <p>(date here)</p>
-                                                    </VerticalTimelineElement>
-                                                    
-                                                    <VerticalTimelineElement>
-                                                        <p className="vertical-timeline-element-title">On Delivery</p>
-                                                        <p>(date here)</p>
-                                                    </VerticalTimelineElement>
-                                                    
-                                                    <VerticalTimelineElement>
-                                                        <p className="vertical-timeline-element-title">Delivered</p>
-                                                        <p>(date here)</p>
-                                                    </VerticalTimelineElement>
-                                                </VerticalTimeline>
-                                            </Grid>
-                                        }
-                                    </Grid>
-                                </Grid>
-                                :
-                                <Grid item xs={12}>
-                                    <Grid container>
-                                        <Grid item>
-                                            <div className="title">
-                                                <div>
-                                                    <Clear/>
-                                                    <h1>The service order was denied.</h1>
-                                                </div>
-                                            </div>
-                                            <div className="remarks">
-                                                <p><strong>Remarks</strong></p>
-                                                <p>
-                                                    Bacon ipsum dolor amet doner hamburger shankle, burgdoggen boudin pig tri-tip sausage. Venison pork chop turducken rump tongue bresaola. Short loin tongue capicola pastrami swine pork loin bresaola. Corned beef chuck tenderloin bresaola. Pig alcatra cupim pancetta jowl ribeye, burgdoggen ham hock corned beef porchetta cow turducken boudin tongue frankfurter. Doner short ribs jowl porchetta shoulder turkey leberkas. Kielbasa fatback flank jerky salami pastrami hamburger tail.
-                                                </p>
-                                            </div>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Button color="primary">Update Service Details</Button>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                                }
-                            </Grid>
-                            
-                        </Grid>
-                    </React.Fragment>
-                }
+    return (
+      <React.Fragment>
+        {selectedItem.ServiceReqId === null ||
+        selectedItem.ServiceReqId === undefined ? (
+          // Default
+          <Grid container className={classes.withMinHeight}>
+            <Grid item xs={12} className={"center-all"}>
+              <div>
+                <LocalShipping className={classes.iconAsLogo} color="primary" />
+                <Typography variant="h5" color="initial">
+                  Select a service request to view details
+                </Typography>
+              </div>
             </Grid>
-        )
-    }
+          </Grid>
+        ) : (
+          <React.Fragment>
+            <Grid item xs={12} className="header">
+              <Typography variant="subtitle1" color="initial">
+                Service Details
+              </Typography>
+            </Grid>
+
+            <div className={classes.withMinHeight}>
+              <Grid container className={classes.paddingAll}>
+                <Grid item xs={12} className={classes.marginBottom}>
+                  <Typography variant="body1" color="initial">
+                    <strong>Status</strong> :
+                    <span
+                      className={`${classes.status} ${getServiceStatus(
+                        selectedItem.ServiceReqStatus
+                      )}`}
+                    >
+                      {getServiceStatus(selectedItem.ServiceReqStatus)}
+                    </span>
+                  </Typography>
+                </Grid>
+                {selectedItem.ServiceReqStatus !== 4 ? (
+                  <React.Fragment>
+                    <Grid item xs={12} md={6} className={classes.paddingAll}>
+                      <Typography
+                        variant="body1"
+                        color="initial"
+                        className={classes.marginBottom}
+                      >
+                        <EmojiTransportation className={classes.marginRight} />
+                        <strong>Origin</strong>
+                      </Typography>
+                      <Typography variant="body1" color="initial">
+                        {selectedItem.Origin}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} className={classes.paddingAll}>
+                      <Typography
+                        variant="body1"
+                        color="initial"
+                        className={classes.marginBottom}
+                      >
+                        <EmojiTransportation className={classes.marginRight} />
+                        <strong>Destination</strong>
+                      </Typography>
+                      <Typography variant="body1" color="initial">
+                        {selectedItem.Destination}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6} className={classes.paddingAll}>
+                      <Typography
+                        variant="body1"
+                        color="initial"
+                        className={classes.marginBottom}
+                      >
+                        <QueryBuilder className={classes.marginRight} />
+                        <strong>Duration</strong>
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        color="initial"
+                        className={classes.marginBottom}
+                      >
+                        {daysDiff(selectedItem.StartDate, selectedItem.EndDate)}{" "}
+                        Days
+                      </Typography>
+                      <Typography variant="body1" color="initial">
+                        {formatDate(selectedItem.StartDate, "DD MMM YYYY")} -{" "}
+                        {formatDate(selectedItem.EndDate, "DD MMM YYYY")}
+                      </Typography>
+                    </Grid>
+                    {selectedItem.ServiceReqStatus !== 1 && (
+                      <Grid item xs={12} className={classes.paddingAll}>
+                        <Typography variant="body1" color="initial">
+                          <LocalShipping className={classes.marginRight} />
+                          <strong>Timeline</strong>
+                        </Typography>
+
+                        <VerticalTimeline
+                          layout={"1-column"}
+                          animate={false}
+                          className={classes.verticalTimeline}
+                        >
+                          <VerticalTimelineElement
+                            className={classes.verticalTimelineElement}
+                            iconClassName={classes.verticalTimelineIcon}
+                            contentStyle={{
+                              boxShadow: "none",
+                              marginLeft: "1.875rem",
+                              padding: "0 0.9375rem 0.625rem 0.9375rem",
+                            }}
+                            icon={<CheckCircle />}
+                          >
+                            <Typography variant="body1" color="initial">
+                              Service Request Accepted
+                            </Typography>
+                            <Typography variant="body1" color="initial">
+                              (date here)
+                            </Typography>
+                          </VerticalTimelineElement>
+
+                          <VerticalTimelineElement
+                            className={classes.verticalTimelineElement}
+                            iconClassName={classes.verticalTimelineIcon}
+                            contentStyle={{
+                              boxShadow: "none",
+                              marginLeft: "1.875rem",
+                              padding: "0 0.9375rem 0.625rem 0.9375rem",
+                            }}
+                            icon={<CheckCircle />}
+                          >
+                            <Typography variant="body1" color="initial">
+                              On Delivery
+                            </Typography>
+                            <Typography variant="body1" color="initial">
+                              (date here)
+                            </Typography>
+                          </VerticalTimelineElement>
+
+                          <VerticalTimelineElement
+                            className={classes.verticalTimelineElement}
+                            iconClassName={classes.verticalTimelineIcon}
+                            contentStyle={{
+                              boxShadow: "none",
+                              marginLeft: "1.875rem",
+                              padding: "0 0.9375rem 0.625rem 0.9375rem",
+                            }}
+                            icon={<CheckCircle />}
+                          >
+                            <Typography variant="body1" color="initial">
+                              Delivered
+                            </Typography>
+                            <Typography variant="body1" color="initial">
+                              (date here)
+                            </Typography>
+                          </VerticalTimelineElement>
+                        </VerticalTimeline>
+                      </Grid>
+                    )}
+                  </React.Fragment>
+                ) : (
+                  <Grid container className={classes.withMinHeight}>
+                    <Grid item xs={12}>
+                      <div className={"textCenter"}>
+                        <Clear className={classes.iconAsLogo} color="primary" />
+                        <Typography variant="h5" color="initial">
+                          The service order was denied.
+                        </Typography>
+                      </div>
+                      <Typography variant="subtitle1" color="initial">
+                        <strong>Remarks</strong>
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        color="initial"
+                        className={classes.marginBottom}
+                      >
+                        Bacon ipsum dolor amet doner hamburger shankle,
+                        burgdoggen boudin pig tri-tip sausage. Venison pork chop
+                        turducken rump tongue bresaola. Short loin tongue
+                        capicola pastrami swine pork loin bresaola. Corned beef
+                        chuck tenderloin bresaola. Pig alcatra cupim pancetta
+                        jowl ribeye, burgdoggen ham hock corned beef porchetta
+                        cow turducken boudin tongue frankfurter. Doner short
+                        ribs jowl porchetta shoulder turkey leberkas. Kielbasa
+                        fatback flank jerky salami pastrami hamburger tail.
+                      </Typography>
+                      <div className={"textCenter"}>
+                        <Button variant="contained" color="primary">
+                          Update Service Details
+                        </Button>
+                      </div>
+                    </Grid>
+                  </Grid>
+                )}
+              </Grid>
+            </div>
+          </React.Fragment>
+        )}
+      </React.Fragment>
+    );
+  };
 }
 
-export default ServiceRequestDetail;
+export default withStyles(styles)(ServiceRequestDetail);
