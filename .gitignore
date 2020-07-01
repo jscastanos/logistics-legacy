@@ -230,3 +230,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+/Controllers/V1/UsersController.cs
+/Messages/V1/Users
+/Services/V1/Users
