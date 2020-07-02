@@ -1,11 +1,6 @@
 name: React App
 
 on:
-  push:
-    branches:
-      - master
-    paths: 
-      - "ClientApp/**"
   pull_request:
     branches:
       - master

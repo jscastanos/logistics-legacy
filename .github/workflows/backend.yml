@@ -1,13 +1,6 @@
 name: .NET API
 
 on:
-  push:
-    branches: 
-      - master
-    paths-ignore:
-      - "ClientApp/**"
-      - ".github/**"
-      - "README.md"
   pull_request:
     branches: 
       - master
