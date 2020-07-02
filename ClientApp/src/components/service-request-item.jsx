@@ -1,11 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import { formatDate } from "../helpers/date-formatter";
-import { Grid, Typography, withStyles } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import { getServiceStatus } from "../helpers/service-status";
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
+const useStyles = makeStyles({
   serviceItem: {
     display: "block",
     borderRadius: "0.3125rem",
@@ -28,17 +29,12 @@ const styles = () => ({
   },
 });
 
-class ServiceRequestItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      serviceRequest: props.serviceRequest,
-    };
-  }
 
-  render() {
-    const { serviceRequest } = this.state;
-    const { classes } = this.props;
+
+  export default function ServiceRequestItem({serviceRequest}) {
+    
+  
+    const classes = useStyles();
 
     return (
       <NavLink
@@ -69,7 +65,5 @@ class ServiceRequestItem extends Component {
         </Grid>
       </NavLink>
     );
-  }
-}
+        }
 
-export default withStyles(styles)(ServiceRequestItem);
