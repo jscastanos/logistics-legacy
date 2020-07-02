@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import ServiceRequestItem from "../../components/service-request-item";
 import ServiceRequestDetail from "../../components/service-request-detail";
-import { Grid, Button, Typography, withStyles } from "@material-ui/core";
+import { Grid, Button, Typography, makeStyles } from "@material-ui/core";
 import { Route } from "react-router-dom";
 import axios from "axios";
 
-const styles = () => ({
+const useStyles = makeStyles({
   root: {
     borderRight: "0.125rem #F3F3FB solid",
     backgroundColor: "#FAFBFC",
@@ -16,77 +16,52 @@ const styles = () => ({
   },
 });
 
-class ServiceRequest extends Component {
-  _isMounted = false;
-  constructor(props) {
-    super(props);
-    this.state = {
-      serviceRequests: [],
-    };
-  }
+const ServiceRequest = () => {
+  const classes = useStyles();
 
-  // DUMMY DATA
-  componentDidMount = async () => {
-    this._isMounted = true;
+  const [serviceRequests, setServiceRequests] = useState([]);
 
-    await axios.get("../dummy-data/service-requests.json").then((response) => {
-      if (this._isMounted) {
-        this.setState({
-          serviceRequests: response.data,
-        });
-      }
+  useEffect(() => {
+    axios.get("../dummy-data/service-requests.json").then((response) => {
+      setServiceRequests(response.data);
     });
-  };
+  }, []);
 
-  filterData = () => {
+  const filterData = () => {
     console.log("filter something here");
   };
 
-  componentWillUnmount = () => {
-    this._isMounted = false;
-  };
-
-  render = () => {
-    const { serviceRequests } = this.state;
-    const { classes } = this.props;
-    return (
-      <Grid container>
-        <Grid item md={6} className={classes.root}>
-          <Grid container>
-            <Grid item xs={12} className="header">
-              <Typography variant="subtitle1" color="initial">
-                Service orders
-                <Button
-                  startIcon={<FilterListIcon />}
-                  onClick={() => this.filterData()}
-                >
-                  Filter
-                </Button>
-              </Typography>
-            </Grid>
-            <Grid item xs={12} className={classes.body}>
-              {serviceRequests.length > 0 ? (
-                serviceRequests.map((item) => (
-                  <ServiceRequestItem
-                    key={item.ServiceReqId}
-                    serviceRequest={item}
-                  />
-                ))
-              ) : (
-                <span>No data found!</span>
-              )}
-            </Grid>
+  return (
+    <Grid container>
+      <Grid item md={6} className={classes.root}>
+        <Grid container>
+          <Grid item xs={12} className="header">
+            <Typography variant="subtitle1" color="initial">
+              Service orders
+              <Button startIcon={<FilterListIcon />} onClick={filterData}>
+                Filter
+              </Button>
+            </Typography>
+          </Grid>
+          <Grid item xs={12} className={classes.body}>
+            {serviceRequests.length > 0 ? (
+              serviceRequests.map((item) => (
+                <ServiceRequestItem
+                  key={item.ServiceReqId}
+                  serviceRequest={item}
+                />
+              ))
+            ) : (
+              <span>No data found!</span>
+            )}
           </Grid>
         </Grid>
-        <Grid item md={6}>
-          <Route
-            path="/service-request/:id?"
-            component={ServiceRequestDetail}
-          />
-        </Grid>
       </Grid>
-    );
-  };
-}
+      <Grid item md={6}>
+        <Route path="/service-request/:id?" component={ServiceRequestDetail} />
+      </Grid>
+    </Grid>
+  );
+};
 
-export default withStyles(styles)(ServiceRequest);
+export default ServiceRequest;
