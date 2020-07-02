@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
 import { formatDate } from "../helpers/date-formatter";
-import { Grid, Typography, makeStyles } from "@material-ui/core";
+import { Grid, Typography, withStyles } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import { getServiceStatus } from "../helpers/service-status";
 
-const useStyles = makeStyles({
+const styles = () => ({
   serviceItem: {
     display: "block",
     borderRadius: "0.3125rem",
@@ -28,38 +28,48 @@ const useStyles = makeStyles({
   },
 });
 
-const ServiceRequestItem = ({ serviceRequest }) => {
-  const classes = useStyles();
+class ServiceRequestItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      serviceRequest: props.serviceRequest,
+    };
+  }
 
-  return (
-    <NavLink
-      to={`/service-request/${serviceRequest.ServiceReqId}`}
-      className={`${classes.serviceItem} ${getServiceStatus(
-        serviceRequest.ServiceReqStatus
-      )}`}
-    >
-      <Grid container>
-        <Grid item xs={8} md={6}>
-          <Typography variant="subtitle2" color="initial">
-            {formatDate(serviceRequest.StartDate, "D MMM")} -{" "}
-            {formatDate(serviceRequest.EndDate, "D MMM YYYY")}
-          </Typography>
-        </Grid>
-        <Grid item xs={3} md={5} className="grow textRight">
-          <Typography
-            variant="subtitle2"
-            color="initial"
-            className="textOverflow"
-          >
-            {serviceRequest.Origin} - {serviceRequest.Destination}
-          </Typography>
-        </Grid>
-        <Grid item xs={1} className="textRight">
-          <KeyboardArrowRightIcon />
-        </Grid>
-      </Grid>
-    </NavLink>
-  );
-};
+  render() {
+    const { serviceRequest } = this.state;
+    const { classes } = this.props;
 
-export default ServiceRequestItem;
+    return (
+      <NavLink
+        to={`/service-request/${serviceRequest.ServiceReqId}`}
+        className={`${classes.serviceItem} ${getServiceStatus(
+          serviceRequest.ServiceReqStatus
+        )}`}
+      >
+        <Grid container>
+          <Grid item xs={8} md={6}>
+            <Typography variant="subtitle2" color="initial">
+              {formatDate(serviceRequest.StartDate, "D MMM")} -{" "}
+              {formatDate(serviceRequest.EndDate, "D MMM YYYY")}
+            </Typography>
+          </Grid>
+          <Grid item xs={3} md={5} className="grow textRight">
+            <Typography
+              variant="subtitle2"
+              color="initial"
+              className="textOverflow"
+            >
+              {serviceRequest.Origin} - {serviceRequest.Destination}
+            </Typography>
+          </Grid>
+          <Grid item xs={1} className="textRight">
+            <KeyboardArrowRightIcon />
+          </Grid>
+        </Grid>
+      </NavLink>
+    );
+  }
+}
+
+export default withStyles(styles)(ServiceRequestItem);
