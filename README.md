@@ -1,6 +1,6 @@
 # Logistics Management Information System
-![Frontend](https://github.com/AccRealSoft/LMIS-Web/workflows/ReactJS/badge.svg?branch=master)
-![Backend](https://github.com/AccRealSoft/LMIS-Web/workflows/.NET%20Core/badge.svg?branch=master)
+![React App](https://github.com/AccRealSoft/LMIS-Web/workflows/React%20App/badge.svg?branch=master)
+![.NET API](https://github.com/AccRealSoft/LMIS-Web/workflows/.NET%20API/badge.svg?branch=master)
 
 ## Getting Started
 
