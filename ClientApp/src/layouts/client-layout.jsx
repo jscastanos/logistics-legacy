@@ -28,6 +28,7 @@ const useStyles = makeStyles({
   },
   appBar: {
     "& svg, a": {
+      backgroundColor: "red",
       color: "#fff",
     },
   },
