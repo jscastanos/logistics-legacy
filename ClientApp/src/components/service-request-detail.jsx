@@ -79,7 +79,9 @@ const serviceRequest = {
 
 const ServiceRequestDetail = () => {
   const classes = useStyles();
-  const [selectedItem, setSelectedItem] = useState(serviceRequest);
+  const [selectedItem, useSelectedItem] = useState();
+
+  useSelectedItem(serviceRequest);
 
   return (
     <React.Fragment>
