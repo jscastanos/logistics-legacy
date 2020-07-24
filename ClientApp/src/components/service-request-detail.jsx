@@ -79,7 +79,7 @@ const serviceRequest = {
 
 const ServiceRequestDetail = () => {
   const classes = useStyles();
-  // const [selectedItem] = useState(serviceRequest);
+  const [selectedItem] = useState(serviceRequest);
 
   return (
     <React.Fragment>
