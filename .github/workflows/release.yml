@@ -18,6 +18,9 @@ jobs:
       - name: Build
         shell: bash
         run: |
+          tag=$(git describe --tags --abbrev=0)
+          release_name="LMIS-$tag-windows"
+          
           # Build everything
           dotnet publish -c Release -o "$release_name"
           
