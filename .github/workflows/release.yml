@@ -26,7 +26,7 @@ jobs:
         shell: bash
         run: |
           tag=$(git describe --tags --abbrev=0)
-          release_name="App-$tag-${{ matrix.target }}"
+          release_name="LMIS-$tag-${{ matrix.target }}"
           
           # Build everything
           dotnet publish LMIS-Web.csproj --framework netcoreapp3.1 -c Release -o "$release_name"
@@ -39,6 +39,11 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: "LMIS*"
+          files: "*.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v0.4.1
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
