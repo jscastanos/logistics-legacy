@@ -1,4 +1,4 @@
-# Logistics Management Information System
+# Logistics Management Information System (LEGACY VERSION)
 ![React App](https://github.com/AccRealSoft/LMIS-Web/workflows/React%20App/badge.svg?branch=master)
 ![.NET API](https://github.com/AccRealSoft/LMIS-Web/workflows/.NET%20API/badge.svg?branch=master)
 
